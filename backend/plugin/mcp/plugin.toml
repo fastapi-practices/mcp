@@ -1,0 +1,6 @@
+[app]
+include = 'admin'
+
+[api.mcp]
+prefix = '/mcps'
+tags = 'MCP'
