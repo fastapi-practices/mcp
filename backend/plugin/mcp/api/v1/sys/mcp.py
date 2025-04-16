@@ -88,7 +88,7 @@ async def delete_mcp(pk: Annotated[int, Path(description='MCP ID')]) -> Response
     '/chat',
     summary='MCP ChatGPT',
     dependencies=[
-        Depends(RequestPermission('sys:mcp:run')),
+        Depends(RequestPermission('sys:mcp:chat')),
         DependsRBAC,
     ],
 )
