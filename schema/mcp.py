@@ -41,5 +41,6 @@ class McpChatParam(SchemaBase):
     pk: list[int] = Field(description='MCP ID 列表')
     provider: McpLLMProvider = Field(McpLLMProvider.openai, description='LLM 供应商')
     model: str = Field(description='LLM 名称')
+    key: str = Field(description='LLM API Key')
     base_url: str | None = Field(None, description='自定义 LLM API 地址，必须兼容 openai 供应商')
     prompt: str = Field(description='用户提示词')

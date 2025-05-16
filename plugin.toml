@@ -1,0 +1,12 @@
+[plugin]
+summary = 'MCP'
+version = '0.0.1'
+description = '支持调用 MCP 的 AI 聊天'
+author = 'wu-clan'
+
+[app]
+include = 'admin'
+
+[api.mcp]
+prefix = '/mcps'
+tags = 'MCP'

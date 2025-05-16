@@ -18,7 +18,6 @@ from backend.common.exception import errors
 from backend.common.log import log
 from backend.common.response.response_schema import response_base
 from backend.database.db import async_db_session
-from backend.plugin.mcp.conf import mcp_settings
 from backend.plugin.mcp.crud.crud_mcp import mcp_dao
 from backend.plugin.mcp.enums import McpLLMProvider, McpType
 from backend.plugin.mcp.schema.mcp import CreateMcpParam, McpChatParam, UpdateMcpParam
@@ -115,24 +114,24 @@ class McpService:
         if obj.provider == McpLLMProvider.deepseek:
             model = OpenAIModel(
                 obj.model,
-                provider=DeepSeekProvider(api_key=mcp_settings.MCP_DEEPSEEK_API_KEY),
+                provider=DeepSeekProvider(api_key=obj.key),
             )
         elif obj.provider == McpLLMProvider.anthropic:
             model = AnthropicModel(
                 obj.model,
-                provider=AnthropicProvider(api_key=mcp_settings.MCP_ANTHROPIC_API_KEY),
+                provider=AnthropicProvider(api_key=obj.key),
             )
         elif obj.provider == McpLLMProvider.gemini:
             model = GeminiModel(
                 obj.model,
-                provider=GoogleGLAProvider(api_key=mcp_settings.MCP_GEMINI_API_KEY),
+                provider=GoogleGLAProvider(api_key=obj.key),
             )
         else:
             model = OpenAIModel(
                 obj.model,
                 provider=OpenAIProvider(
                     base_url=obj.base_url,
-                    api_key=mcp_settings.MCP_OPENAI_API_KEY,
+                    api_key=obj.key,
                 ),
             )
 
