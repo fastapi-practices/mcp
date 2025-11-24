@@ -1,6 +1,6 @@
 [plugin]
 summary = 'MCP'
-version = '0.0.1'
+version = '0.0.2'
 description = 'MCP 服务器管理'
 author = 'wu-clan'
 
