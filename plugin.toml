@@ -1,7 +1,7 @@
 [plugin]
 summary = 'MCP'
 version = '0.0.1'
-description = 'MCP 服务器管理，支持调用 MCP 进行 AI 聊天'
+description = 'MCP 服务器管理'
 author = 'wu-clan'
 
 [app]

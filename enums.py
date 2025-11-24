@@ -1,4 +1,4 @@
-from backend.common.enums import IntEnum, StrEnum
+from backend.common.enums import IntEnum
 
 
 class McpType(IntEnum):
@@ -6,12 +6,3 @@ class McpType(IntEnum):
 
     stdio = 0
     sse = 1
-
-
-class McpLLMProvider(StrEnum):
-    """MCP 大语言模型供应商"""
-
-    openai = 'openai'
-    deepseek = 'deepseek'
-    anthropic = 'anthropic'
-    gemini = 'gemini'

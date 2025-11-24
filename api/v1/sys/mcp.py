@@ -1,7 +1,6 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Path, Query
-from starlette.responses import StreamingResponse
 
 from backend.common.pagination import DependsPagination, PageData, paging_data
 from backend.common.response.response_schema import ResponseModel, ResponseSchemaModel, response_base
@@ -9,7 +8,7 @@ from backend.common.security.jwt import DependsJwtAuth
 from backend.common.security.permission import RequestPermission
 from backend.common.security.rbac import DependsRBAC
 from backend.database.db import CurrentSession
-from backend.plugin.mcp.schema.mcp import CreateMcpParam, GetMcpDetail, McpChatParam, UpdateMcpParam
+from backend.plugin.mcp.schema.mcp import CreateMcpParam, GetMcpDetail, UpdateMcpParam
 from backend.plugin.mcp.service.mcp_service import mcp_service
 
 router = APIRouter()
@@ -80,16 +79,3 @@ async def delete_mcp(pk: Annotated[int, Path(description='MCP ID')]) -> Response
     if count > 0:
         return response_base.success()
     return response_base.fail()
-
-
-@router.post(
-    '/chat',
-    summary='MCP ChatGPT',
-    dependencies=[
-        Depends(RequestPermission('sys:mcp:chat')),
-        DependsRBAC,
-    ],
-)
-async def mcp_chat(obj: McpChatParam) -> StreamingResponse:
-    data = await mcp_service.chat(obj=obj)
-    return StreamingResponse(data, media_type='text/event-stream')

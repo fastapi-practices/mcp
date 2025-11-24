@@ -4,7 +4,7 @@ from typing import Any
 from pydantic import ConfigDict, Field, HttpUrl
 
 from backend.common.schema import SchemaBase
-from backend.plugin.mcp.enums import McpLLMProvider, McpType
+from backend.plugin.mcp.enums import McpType
 
 
 class McpSchemaBase(SchemaBase):
@@ -33,12 +33,3 @@ class GetMcpDetail(McpSchemaBase):
     id: int = Field(description='MCP ID')
     created_time: datetime = Field(description='创建时间')
     updated_time: datetime | None = Field(None, description='更新时间')
-
-
-class McpChatParam(SchemaBase):
-    pk: list[int] = Field(description='MCP ID 列表')
-    provider: McpLLMProvider = Field(McpLLMProvider.openai, description='LLM 供应商')
-    model: str = Field(description='LLM 名称')
-    key: str = Field(description='LLM API Key')
-    base_url: str | None = Field(None, description='自定义 LLM API 地址，必须兼容 openai 供应商')
-    prompt: str = Field(description='用户提示词')
