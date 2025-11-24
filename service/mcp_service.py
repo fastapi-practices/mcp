@@ -1,6 +1,4 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-from typing import AsyncGenerator
+from collections.abc import AsyncGenerator
 
 from pydantic_ai import Agent
 from pydantic_ai.mcp import MCPServerHTTP, MCPServerStdio
@@ -20,12 +18,13 @@ from backend.common.response.response_schema import response_base
 from backend.database.db import async_db_session
 from backend.plugin.mcp.crud.crud_mcp import mcp_dao
 from backend.plugin.mcp.enums import McpLLMProvider, McpType
+from backend.plugin.mcp.model import Mcp
 from backend.plugin.mcp.schema.mcp import CreateMcpParam, McpChatParam, UpdateMcpParam
 
 
 class McpService:
     @staticmethod
-    async def get(*, pk: int):
+    async def get(*, pk: int) -> Mcp:
         """
         获取 MCP 服务器
 
@@ -74,9 +73,8 @@ class McpService:
         """
         async with async_db_session.begin() as db:
             mcp = await mcp_dao.get(db, pk)
-            if mcp.name != obj.name:
-                if mcp_dao.get_by_name(db, name=obj.name):
-                    raise errors.ForbiddenError(msg='MCP 服务器已存在')
+            if mcp.name != obj.name and mcp_dao.get_by_name(db, name=obj.name):
+                raise errors.ForbiddenError(msg='MCP 服务器已存在')
             count = await mcp_dao.update(db, pk, obj)
             return count
 
@@ -137,7 +135,7 @@ class McpService:
 
         agent = Agent(model, mcp_servers=mcp_servers)
 
-        async def stream_messages():
+        async def stream_messages():  # noqa: ANN202
             try:
                 async with agent.run_mcp_servers():
                     async with agent.run_stream(obj.prompt) as result:
