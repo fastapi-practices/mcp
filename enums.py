@@ -6,3 +6,4 @@ class McpType(IntEnum):
 
     stdio = 0
     sse = 1
+    streamable_http = 2

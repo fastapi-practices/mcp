@@ -42,7 +42,7 @@ class CRUDMcp(CRUDPlus[Mcp]):
             filters.update(name__like=f'%{name}%')
         if type is not None:
             filters.update(type=type)
-        return await self.select_order('created_time', 'desc', **filters)
+        return await self.select_order('id', 'desc', **filters)
 
     async def create(self, db: AsyncSession, obj: CreateMcpParam) -> None:
         """
